@@ -18,6 +18,7 @@ class Product extends Model
         'location',
         'quantity',
         'size',
+        'status',
     ];
 
     public function category()
