@@ -3,7 +3,9 @@
 use App\Http\Controllers\Api\Admin\AreaController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\CityController;
+use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\SubCategoryController;
+use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,5 +56,20 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
     Route::put('/admin/subCategory/update/{id}', [SubCategoryController::class, 'updateSubCategory']);
 
+/////////////////////////////////////////////// Users //////////////////////////////////////////////////
+
+    Route::get('/admin/users', [UserController::class, 'getUsers']);
+
+    Route::put('/admin/user/update/{id}', [UserController::class, 'updateUser']);
+
+    Route::put('/admin/user/accept/{id}', [UserController::class, 'acceptUser']);
+
+    Route::put('/admin/user/reject/{id}', [UserController::class, 'rejectUser']);
+
+    Route::put('/admin/user/suspend/{id}', [UserController::class, 'suspendUser']);
+
+////////////////////////////////////////////////// Products //////////////////////////////////////////////////
+
+    Route::get('/admin/products', [ProductController::class, 'getProducts']);
 
 });

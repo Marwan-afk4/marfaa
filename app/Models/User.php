@@ -24,6 +24,7 @@ class User extends Model
         'status',
         'image',
         'role',
+        'nationality_pdf'
     ];
 
     protected $hidden = [
