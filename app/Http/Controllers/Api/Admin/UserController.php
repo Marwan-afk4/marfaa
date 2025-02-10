@@ -17,6 +17,7 @@ class UserController extends Controller
     $acceptedUsers = User::where('status', 'accepted')
         ->where('role', 'seller')
         ->with('testproducts')
+        ->with('user_identities')
         ->get();
 
     $otherStatuses = ['pending', 'rejected', 'suspended'];
@@ -26,35 +27,50 @@ class UserController extends Controller
         $users[$status] = User::where('status', $status)
             ->where('role', 'user')
             ->with('testproducts')
+            ->with('user_identities')
             ->get();
     }
 
+    // Format accepted users
     foreach ($acceptedUsers as $user) {
+        // Convert testproduct image URLs
         foreach ($user->testproducts as $testproduct) {
             if ($testproduct->image) {
                 $testproduct->image = url('storage/' . $testproduct->image);
             }
         }
-    }
 
-    foreach ($users as $status => $userList) {
-        foreach ($userList as $user) {
-            foreach ($user->testproducts as $testproduct) {
-                if ($testproduct->image) {
-                    $testproduct->image = url('storage/' . $testproduct->image);
-                }
+        // Convert user identities image URLs
+        foreach ($user->user_identities as $identity) {
+            if ($identity->identify_image) {
+                $identity->identify_image = url('storage/' . $identity->identify_image);
             }
         }
-    }
 
-    foreach ($acceptedUsers as $user) {
+        // Convert user image URL
         if ($user->image) {
             $user->image = url('storage/' . $user->image);
         }
     }
 
+    // Format users with other statuses
     foreach ($users as $status => $userList) {
         foreach ($userList as $user) {
+            // Convert testproduct image URLs
+            foreach ($user->testproducts as $testproduct) {
+                if ($testproduct->image) {
+                    $testproduct->image = url('storage/' . $testproduct->image);
+                }
+            }
+
+            // Convert user identities image URLs
+            foreach ($user->user_identities as $identity) {
+                if ($identity->identify_image) {
+                    $identity->identify_image = url('storage/' . $identity->identify_image);
+                }
+            }
+
+            // Convert user image URL
             if ($user->image) {
                 $user->image = url('storage/' . $user->image);
             }
@@ -68,6 +84,7 @@ class UserController extends Controller
         'suspended' => $users['suspended'],
     ]);
 }
+
 
     public function updateUser(Request $request, $id){
         $user = User::find($id);

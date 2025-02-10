@@ -30,10 +30,18 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required'],
             'email' => ['required', 'email','unique:users,email'],
             'password' => ['required','min:8'],
-            'phone' => ['required','unique:users,phone'],
+            'phone' => ['nullable','unique:users,phone'],
             'gender' => ['nullable','in:male,female'],
             'age' => ['nullable','numeric'],
             'full_address' => ['nullable'],
+            'test_products' => ['nullable','array'],
+            'test_products.*' => ['nullable'],
+            'test_products.*.name' => ['nullable'],
+            // 'test_products.*.image' => ['nullable'],
+            'role' => ['required','in:user,seller'],
+            'identify_image' => ['nullable'],
+            'floor_number' => ['nullable'],
+            'apartment_number' => ['nullable'],
         ];
     }
 
