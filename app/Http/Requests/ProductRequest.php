@@ -34,6 +34,7 @@ class ProductRequest extends FormRequest
             'quantity'=>['required','min:1'],
             'size'=>['nullable'],
             'color'=>['nullable'],
+            'product_quality' => ['required','in:مستعمل,مستعمل كالجديد,جديد'],
             'images'=>['nullable','array'],
             'images.*'=>['nullable'],
         ];

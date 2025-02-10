@@ -65,6 +65,7 @@ class ProductController extends Controller
             'price'=>$validationProduct['price'],
             'location'=>$validationProduct['location'],
             'quantity'=>$validationProduct['quantity'],
+            'product_quality'=>$validationProduct['product_quality'],
             'size'=>$validationProduct['size']??null,
             'color'=>$validationProduct['color']??null
         ]);
@@ -115,6 +116,7 @@ class ProductController extends Controller
             'description'=>$validationProduct['description']??$product->description,
             'price'=>$validationProduct['price']??$product->price,
             'location'=>$validationProduct['location']??$product->location,
+            'product_quality'=>$validationProduct['product_quality']??$product->product_quality,
             'quantity'=>$validationProduct['quantity']??$product->quantity,
             'size'=>$validationProduct['size']??$product->size,
             'color'=>$validationProduct['color']??$product->color

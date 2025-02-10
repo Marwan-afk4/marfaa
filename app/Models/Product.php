@@ -21,7 +21,8 @@ class Product extends Model
         'status',
         'color',
         'delete_reason',
-        'state'
+        'state',
+        'product_quality'
     ];
 
     public function category()
