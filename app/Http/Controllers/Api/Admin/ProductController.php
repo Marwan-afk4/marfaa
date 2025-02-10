@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\trait\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -83,9 +84,21 @@ class ProductController extends Controller
         return response()->json($data);
     }
 
-    public function deleteProduct($id){
+    public function deleteProduct(Request $request,$id){
         $product = Product::find($id);
-        $product->delete();
+        $validaition = Validator::make($request->all(), [
+            'delete_reason'=>'required'
+        ]);
+        if($validaition->fails()){
+            return response()->json([
+                'message' => 'Validation errors',
+                'data' => $validaition->errors()
+            ],400);
+        }
+        $product->update([
+            'delete_reason'=>$request->delete_reason,
+            'state'=>'unactive'
+        ]);
         return response()->json([
             'message' => 'Product deleted successfully'
         ]);
