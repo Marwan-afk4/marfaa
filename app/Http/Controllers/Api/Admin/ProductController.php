@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductImage;
+use App\trait\Image;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-
+    use Image;
 
     public function getProducts(){
         $products = Product::with(['category','subCategory','user','productImages'])->get();
@@ -49,5 +52,75 @@ class ProductController extends Controller
         return response()->json(['prodcusts'=>$data]);
     }
 
-    
+    public function addProduct(ProductRequest $request){
+        $user = $request->user();
+        $validationProduct = $request->validated();
+        $product = Product::create([
+            'user_id'=>$user->id,
+            'category_id'=>$validationProduct['category_id'],
+            'sub_category_id'=>$validationProduct['subCategory_id'],
+            'name'=>$validationProduct['name'],
+            'description'=>$validationProduct['description'],
+            'price'=>$validationProduct['price'],
+            'location'=>$validationProduct['location'],
+            'quantity'=>$validationProduct['quantity'],
+            'size'=>$validationProduct['size']??null,
+            'color'=>$validationProduct['color']??null
+        ]);
+
+        if($request->has('images')) {
+            foreach ($request->images as $image) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $this->storeBase64Image($image, 'admin/products'),
+                ]);
+            }
+        }
+        $data =[
+            'message' => 'Product created successfully',
+            'product' => $product
+        ];
+        return response()->json($data);
+    }
+
+    public function deleteProduct($id){
+        $product = Product::find($id);
+        $product->delete();
+        return response()->json([
+            'message' => 'Product deleted successfully'
+        ]);
+    }
+
+    public function updateProduct(ProductRequest $request, $id){
+        $validationProduct = $request->validated();
+        $product = Product::find($id);
+        $product->update([
+            'user_id'=>$validationProduct['user_id']??$product->user_id,
+            'category_id'=>$validationProduct['category_id']??$product->category_id,
+            'sub_category_id'=>$validationProduct['subCategory_id']??$product->sub_category_id,
+            'name'=>$validationProduct['name']??$product->name,
+            'description'=>$validationProduct['description']??$product->description,
+            'price'=>$validationProduct['price']??$product->price,
+            'location'=>$validationProduct['location']??$product->location,
+            'quantity'=>$validationProduct['quantity']??$product->quantity,
+            'size'=>$validationProduct['size']??$product->size,
+            'color'=>$validationProduct['color']??$product->color
+        ]);
+        if($request->has('images')) {
+            foreach ($request->images as $image) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => $this->storeBase64Image($image, 'admin/products'),
+                ]);
+            }
+        }
+        $data =[
+            'message' => 'Product updated successfully',
+            'product' => $product
+        ];
+        return response()->json($data);
+    }
+
+
+
 }
