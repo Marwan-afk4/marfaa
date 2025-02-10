@@ -10,7 +10,7 @@ class UserIdentity extends Model
 
     protected $fillable =[
         'user_id',
-        'pdf',
+        'identify_image',
     ];
 
     public function user()

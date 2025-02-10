@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     use Image;
-    protected $updateUser = ['city_id', 'area_id', 'first_name', 'last_name', 'phone', 'gender', 'age', 'full_address','nationality_pdf'];
+    protected $updateUser = ['city_id', 'area_id', 'first_name', 'last_name', 'phone', 'gender', 'age', 'full_address','identify_image'];
 
     public function getUsers()
 {
