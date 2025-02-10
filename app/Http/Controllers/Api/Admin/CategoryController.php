@@ -17,7 +17,7 @@ class CategoryController extends Controller
         $categories = Category::all();
         foreach ($categories as $category){
             if($category->image){
-                $category->image = url('storage/'.$category->image);
+                $category->image = asset('storage/'.$category->image);
             }
         }
         $data =[
