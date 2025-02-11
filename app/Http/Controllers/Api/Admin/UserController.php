@@ -20,7 +20,13 @@ class UserController extends Controller
         ->with('user_identities')
         ->get();
 
-    $otherStatuses = ['pending', 'rejected', 'suspended'];
+        $pendingedUsers = User::where('status', 'pending')
+        ->where('role', 'seller')
+        ->with('testproducts')
+        ->with('user_identities')
+        ->get();
+
+    $otherStatuses = ['rejected', 'suspended'];
     $users = [];
 
     foreach ($otherStatuses as $status) {
@@ -39,6 +45,14 @@ class UserController extends Controller
                 $testproduct->image = url('storage/' . $testproduct->image);
             }
         }
+
+        foreach ($pendingedUsers as $user) {
+            // Convert testproduct image URLs
+            foreach ($user->testproducts as $testproduct) {
+                if ($testproduct->image) {
+                    $testproduct->image = url('storage/' . $testproduct->image);
+                }
+            }
 
         // Convert user identities image URLs
         foreach ($user->user_identities as $identity) {
@@ -79,10 +93,11 @@ class UserController extends Controller
 
     return response()->json([
         'accepted' => $acceptedUsers,
-        'pending' => $users['pending'],
+        'pending' => $pendingedUsers,
         'rejected' => $users['rejected'],
         'suspended' => $users['suspended'],
     ]);
+}
 }
 
 

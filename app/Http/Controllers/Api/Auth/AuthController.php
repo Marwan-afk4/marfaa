@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         if($validationsignup['role'] == 'seller'){
             $validationsignup['status'] = 'pending';
-            $validationsignup['role'] = 'user';
+            $validationsignup['role'] = 'seller';
         }elseif($validationsignup['role'] == 'user'){
             $validationsignup['role'] = 'user';
             $validationsignup['status'] = 'accepted';

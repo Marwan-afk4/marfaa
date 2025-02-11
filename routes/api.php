@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Admin\AreaController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\CityController;
+use App\Http\Controllers\Api\Admin\HomepageController;
 use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\SubCategoryController;
 use App\Http\Controllers\Api\Admin\UserController;
@@ -77,5 +78,9 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
     Route::delete('/admin/product/delete/{id}', [ProductController::class, 'deleteProduct']);
 
     Route::put('/admin/product/update/{id}', [ProductController::class, 'updateProduct']);
+
+///////////////////////////////////////////////// HOMEpage /////////////////////////////////////////////////////
+
+    Route::get('/admin/homepage', [HomepageController::class, 'HomePage']);
 
 });
