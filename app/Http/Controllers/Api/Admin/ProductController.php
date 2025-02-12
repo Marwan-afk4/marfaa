@@ -15,7 +15,9 @@ class ProductController extends Controller
     use Image;
 
     public function getProducts(){
-        $products = Product::with(['category','subCategory','user','productImages'])->get();
+        $products = Product::with(['category','subCategory','user','productImages'])
+        ->where('state','active')
+        ->get();
         foreach ($products as $product){
             foreach ($product->productImages as $productImage){
                 $productImage->image = url('storage/'.$productImage->image);
