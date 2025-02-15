@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\SubCategoryController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Seller\HomepageController as SellerHomepageController;
+use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -82,5 +84,25 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 ///////////////////////////////////////////////// HOMEpage /////////////////////////////////////////////////////
 
     Route::get('/admin/homepage', [HomepageController::class, 'HomePage']);
+
+});
+
+Route::middleware(['auth:sanctum','IsSeller'])->group(function () {
+
+    Route::get('/seller/homepage', [SellerHomepageController::class, 'HomePage']);
+
+    Route::get('/seller/getAreas', [SellerHomepageController::class, 'getAreas']);
+
+    Route::get('/seller/getCities', [SellerHomepageController::class, 'getCities']);
+
+/////////////////////////////////////////////// Products /////////////////////////////////////////////////////////////
+
+    Route::get('/seller/getcategories', [SellerProductController::class, 'getCtegories']);
+
+    Route::get('/seller/getSubCategory', [SellerProductController::class, 'getSubCategory']);
+
+    Route::post('/seller/add/product', [SellerProductController::class, 'addProduct']);
+
+    Route::get('/seller/getSellerProducts', [SellerProductController::class, 'getSellerProducts']);
 
 });
