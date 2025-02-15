@@ -17,6 +17,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::delete('/logout', [AuthController::class, 'logout']);
 
+Route::get('/seller/getAreas', [SellerHomepageController::class, 'getAreas']);
+
+Route::get('/seller/getCities', [SellerHomepageController::class, 'getCities']);
+
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
 //////////////////////////////////////////// Areas //////////////////////////////////////////////////
@@ -91,9 +95,7 @@ Route::middleware(['auth:sanctum','IsSeller'])->group(function () {
 
     Route::get('/seller/homepage', [SellerHomepageController::class, 'HomePage']);
 
-    Route::get('/seller/getAreas', [SellerHomepageController::class, 'getAreas']);
 
-    Route::get('/seller/getCities', [SellerHomepageController::class, 'getCities']);
 
 /////////////////////////////////////////////// Products /////////////////////////////////////////////////////////////
 
