@@ -91,13 +91,15 @@ class UserController extends Controller
         }
     }
 
+
+}
+
     return response()->json([
         'accepted' => $acceptedUsers,
         'pending' => $pendingedUsers,
         'rejected' => $users['rejected'],
         'suspended' => $users['suspended'],
     ]);
-}
 }
 
 
