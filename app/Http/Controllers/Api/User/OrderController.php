@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -54,5 +55,22 @@ class OrderController extends Controller
         });
 
         return response()->json(['previous_orders'=>$data]);
+    }
+
+    public function makeOrder(Request $request){
+        $user = $request->user();
+        $products = $request->products;
+        $validation = Validator::make($request->all(), [
+            'products' => 'required|array|min:1',
+            'products.*.product_id' => 'required|exists:products,id',
+        ]);
+        $order = Order::create([
+            'user_id' => $user->id,
+            'order_code' => 'ORD'.rand(1000,9999),
+            'total_price' => 0,
+            'status' => 'processing'
+        ]);
+        $totalPrcice = 0 ;
+        foreach($request->products as $product){}
     }
 }

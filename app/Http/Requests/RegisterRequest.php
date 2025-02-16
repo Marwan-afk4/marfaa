@@ -24,8 +24,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city_id' => ['required','exists:cities,id'],
-            'area_id' => ['required','exists:areas,id'],
+            'city_id' => ['nullable','exists:cities,id'],
+            'area_id' => ['nullable','exists:areas,id'],
             'first_name' => ['required'],
             'last_name' => ['required'],
             'email' => ['required', 'email','unique:users,email'],
