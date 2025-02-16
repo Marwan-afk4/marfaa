@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderList;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -63,14 +66,38 @@ class OrderController extends Controller
         $validation = Validator::make($request->all(), [
             'products' => 'required|array|min:1',
             'products.*.product_id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
         ]);
+
+        if ($validation->fails()) {
+            return response()->json(['errors' => $validation->errors()], 422);
+        }
         $order = Order::create([
             'user_id' => $user->id,
-            'order_code' => 'ORD'.rand(1000,9999),
+            'order_code' =>  'ORD-' . strtoupper(Str::random(6)),
             'total_price' => 0,
             'status' => 'processing'
         ]);
-        $totalPrcice = 0 ;
-        foreach($request->products as $product){}
+        $totalPrice = 0 ;
+        foreach($request->products as $productData){
+            $product = Product::find($productData['product_id']);
+            $orderItem=OrderList::create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'quantity' => $productData['quantity'],
+                'price' => $product->price
+            ]);
+            $orderItems[] = $orderItem;
+            $totalPrice += $product->price * $productData['quantity'];        }
+        $order->total_price = $totalPrice;
+        $order->save();
+        return response()->json([
+            'message' => 'Order created successfully',
+            'order_id' => $order->id,
+            'order_code' => $order->order_code,
+            'total_price' => $order->total_price,
+            'status' => $order->status,
+            'order_items' => $orderItems
+        ], 200);
     }
 }

@@ -131,4 +131,6 @@ Route::middleware(['auth:sanctum','IsUser'])->group(function () {
 /////////////////////////////////////////// Orders /////////////////////////////////////////////////////////////
 
     Route::get('/user/orders', [OrderController::class, 'previousOrder']);
+
+    Route::post('/user/makeOrder', [OrderController::class, 'makeOrder']); 
 });
