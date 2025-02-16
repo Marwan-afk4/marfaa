@@ -70,7 +70,9 @@ class ProductController extends Controller
             'product_quality'=>$validationProduct['product_quality'],
             'type'=>$validationProduct['type'],
             'size'=>$validationProduct['size']??null,
-            'color'=>$validationProduct['color']??null
+            'color'=>$validationProduct['color']??null,
+            'state'=>'active',
+            'status'=>'اكتمل'
         ]);
 
         if($request->has('images')) {

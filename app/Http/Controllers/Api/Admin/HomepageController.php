@@ -12,8 +12,8 @@ class HomepageController extends Controller
 
 
     public function HomePage(){
-        $completedOrder = Product::where('status','اكتمل')->count();
-        $inprogressOrder = Product::where('status','تحت المراجعة')->count();
+        $completedOrder = 0; //lsa el order bardo
+        $inprogressOrder = 0; //lsa el order
         $pendingSeller = User::where('status','pending')
         ->where('role','seller')
         ->count();

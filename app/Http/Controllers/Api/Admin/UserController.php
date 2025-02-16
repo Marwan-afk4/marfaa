@@ -20,8 +20,8 @@ class UserController extends Controller
         ->with('user_identities')
         ->get();
 
-        $pendingedUsers = User::where('status', 'pending')
-        ->where('role', 'seller')
+        $pendingedUsers = User::where('status','pending')
+        ->where('role','seller')
         ->with('testproducts')
         ->with('user_identities')
         ->get();

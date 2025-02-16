@@ -47,7 +47,8 @@ class ProductController extends Controller
             'type'=>$validationProduct['type'],
             'size'=>$validationProduct['size']??null,
             'color'=>$validationProduct['color']??null,
-            'state'=>'active'
+            'state'=>'active',
+            'status'=>'اكتمل'
         ]);
         if($request->has('images')) {
             foreach ($request->images as $image) {
