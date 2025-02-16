@@ -15,7 +15,24 @@ class UserHomePageController extends Controller
     public function Homepage(Request $request){
         $user = $request->user();
         $categories = Category::all();
-        $products = Product::all();
+        $products = Product::with('productImages')->get()->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => $product->price,
+                'images' => $product->productImages->map(function ($image) {
+                    return [
+                        'image' =>asset('storage/' . $image->image),
+                    ];
+                }),
+            ];
+        });
+        foreach($categories as $category){
+            if($category->image){
+                $category->image = asset('storage/'.$category->image);
+            }
+        }
         $data =[
             'user_name'=>$user->first_name.' '.$user->last_name,
             'categories' => $categories,
