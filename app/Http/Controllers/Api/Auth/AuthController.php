@@ -27,8 +27,8 @@ class AuthController extends Controller
             $validationsignup['status'] = 'accepted';
         }
         $user = User::create([
-            'city_id' => $validationsignup['city_id'],
-            'area_id' => $validationsignup['area_id'],
+            'city_id' => $validationsignup['city_id']??null,
+            'area_id' => $validationsignup['area_id']??null,
             'first_name' => $validationsignup['first_name'],
             'last_name' => $validationsignup['last_name'],
             'email' => $validationsignup['email'],
