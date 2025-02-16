@@ -17,6 +17,11 @@ class ProductController extends Controller
 
     public function getCtegories(){
         $categories = Category::all();
+        foreach($categories as $category){
+            if($category->image){
+                $category->image = asset('storage/'.$category->image);
+            }
+        }
         $data =[
             'categories' => $categories
         ];
@@ -25,6 +30,11 @@ class ProductController extends Controller
 
     public function getSubCategory(){
         $subcategory = SubCategory::all();
+        foreach($subcategory as $subCategory){
+            if($subCategory->image){
+                $subCategory->image = asset('storage/'.$subCategory->image);
+            }
+        }
         $data =[
             'subcategory' => $subcategory
         ];

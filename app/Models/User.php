@@ -57,4 +57,9 @@ class User extends Model
     {
         return $this->hasMany(TestProduct::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
