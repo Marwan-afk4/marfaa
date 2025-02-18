@@ -26,6 +26,8 @@ Route::get('/seller/getCities', [SellerHomepageController::class, 'getCities']);
 
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
+    Route::delete('/admin/logout', [AuthController::class, 'logout']);
+
 //////////////////////////////////////////// Areas //////////////////////////////////////////////////
 
     Route::get('/admin/areas', [AreaController::class, 'getAreas']);
@@ -99,6 +101,8 @@ Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
 Route::middleware(['auth:sanctum','IsSeller'])->group(function () {
 
+    Route::delete('/seller/logout', [AuthController::class, 'logout']);
+
     Route::get('/seller/homepage', [SellerHomepageController::class, 'HomePage']);
 
 /////////////////////////////////////////////// Products /////////////////////////////////////////////////////////////
@@ -116,6 +120,8 @@ Route::middleware(['auth:sanctum','IsSeller'])->group(function () {
 
 
 Route::middleware(['auth:sanctum','IsUser'])->group(function () {
+
+    Route::delete('/user/logout', [AuthController::class, 'logout']);
 
     Route::get('/user/homepage', [UserHomePageController::class, 'HomePage']);
 
@@ -141,6 +147,8 @@ Route::middleware(['auth:sanctum','IsUser'])->group(function () {
 
 
 Route::middleware(['auth:sanctum','IsDelivery'])->group(function () {
+
+    Route::delete('/delivery/logout', [AuthController::class, 'logout']);
 
     Route::get('/delivery/getProcessingOrders', [DeliveryController::class, 'getProcessingOrders']);
 
