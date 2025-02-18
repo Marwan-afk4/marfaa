@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserHomePageController extends Controller
 {
@@ -79,12 +80,15 @@ class UserHomePageController extends Controller
         return response()->json($data);
     }
 
-    public function addFavourite($product_id){
+    public function addFavourite(Request $request,$product_id){
         $product = Product::find($product_id);
-        $product->favourite = 1;
+        $validation = Validator::make($request->all(), [
+            'favourite' => 'required|in:1,0',
+        ]);
+        $product->favourite = $request->favourite;
         $product->save();
         $data =[
-            'message' => 'Product added to favourite successfully'
+            'message' => 'favourite updated successfully'
         ];
         return response()->json($data);
     }
