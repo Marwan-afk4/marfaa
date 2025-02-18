@@ -46,6 +46,9 @@ class OrderController extends Controller
                             'product_color' => $orderItem->product->color,
                             'product_quality' => $orderItem->product->product_quality,
                             'product_type' => $orderItem->product->type,
+                            'product_location' => $orderItem->product->location,
+                            'product_quantity' => $orderItem->product->quantity,
+                            'product_status' => $orderItem->product->status,
                             'product_images' => $orderItem->product->productImages->map(function ($image) {
                                 return [
                                     'image' => url('storage/' . $image->image),

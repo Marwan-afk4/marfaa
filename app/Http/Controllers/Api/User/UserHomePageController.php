@@ -30,6 +30,8 @@ class UserHomePageController extends Controller
                 'size' => $product->size,
                 'color' => $product->color,
                 'quantity' => $product->quantity,
+                'product_quality' => $product->product_quality,
+                'product_status' => $product->status,
                 'type' => $product->type,
                 'images' => $product->productImages->map(function ($image) {
                     return [
