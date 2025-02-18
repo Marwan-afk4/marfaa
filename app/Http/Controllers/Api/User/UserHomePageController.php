@@ -97,6 +97,13 @@ class UserHomePageController extends Controller
         $products = Product::where('favourite',1)
         ->with(['category','subCategory','productImages'])
         ->get();
+
+        
+        foreach ($products as $product){
+            foreach ($product->productImages as $productImage){
+                $productImage->image = asset('storage/'.$productImage->image);
+            }
+        }
         $data =[
             'products' => $products
         ];
