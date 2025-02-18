@@ -72,7 +72,7 @@ class ProductController extends Controller
             'size'=>$validationProduct['size']??null,
             'color'=>$validationProduct['color']??null,
             'state'=>'active',
-            'status'=>'اكتمل'
+            'status'=>'في السوق'
         ]);
 
         if($request->has('images')) {

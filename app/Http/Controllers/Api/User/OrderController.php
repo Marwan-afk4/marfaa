@@ -64,6 +64,7 @@ class OrderController extends Controller
         $user = $request->user();
         $products = $request->products;
         $validation = Validator::make($request->all(), [
+            'location'=>'required',
             'products' => 'required|array|min:1',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
@@ -76,7 +77,8 @@ class OrderController extends Controller
             'user_id' => $user->id,
             'order_code' =>  'ORD-' . strtoupper(Str::random(6)),
             'total_price' => 0,
-            'status' => 'processing'
+            'status' => 'processing',
+            'location' => $request->location
         ]);
         $totalPrice = 0 ;
         foreach($request->products as $productData){
@@ -88,12 +90,15 @@ class OrderController extends Controller
                 'price' => $product->price
             ]);
             $orderItems[] = $orderItem;
-            $totalPrice += $product->price * $productData['quantity'];        }
+            $totalPrice += $product->price * $productData['quantity'];
+            }
+
         $order->total_price = $totalPrice;
         $order->save();
         return response()->json([
             'message' => 'Order created successfully',
             'order_id' => $order->id,
+            'order_location' => $order->location,
             'order_code' => $order->order_code,
             'total_price' => $order->total_price,
             'status' => $order->status,

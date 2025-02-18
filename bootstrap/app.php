@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\DeliveryMiddleware;
 use App\Http\Middleware\SellerMiddleware;
 use App\Http\Middleware\UserMiddleware;
 use Illuminate\Foundation\Application;
@@ -18,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'IsAdmin' => AdminMiddleware::class,
             'IsUser' => UserMiddleware::class,
-            'IsSeller' => SellerMiddleware::class
+            'IsSeller' => SellerMiddleware::class,
+            'IsDelivery' => DeliveryMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

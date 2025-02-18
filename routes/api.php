@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\SubCategoryController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Delivery\DeliveryController;
 use App\Http\Controllers\Api\Seller\HomepageController as SellerHomepageController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Api\User\OrderController;
@@ -132,5 +133,18 @@ Route::middleware(['auth:sanctum','IsUser'])->group(function () {
 
     Route::get('/user/orders', [OrderController::class, 'previousOrder']);
 
-    Route::post('/user/makeOrder', [OrderController::class, 'makeOrder']); 
+    Route::post('/user/makeOrder', [OrderController::class, 'makeOrder']);
+});
+
+
+
+
+
+Route::middleware(['auth:sanctum','IsDelivery'])->group(function () {
+
+    Route::get('/delivery/getProcessingOrders', [DeliveryController::class, 'getProcessingOrders']);
+
+    Route::put('/delivery/completedOrder/{order_id}', [DeliveryController::class, 'deliveredOrder']);
+
+    Route::put('/delivery/canceledOrder/{order_id}', [DeliveryController::class, 'canceledOrder']);
 });

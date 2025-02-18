@@ -58,7 +58,7 @@ class ProductController extends Controller
             'size'=>$validationProduct['size']??null,
             'color'=>$validationProduct['color']??null,
             'state'=>'active',
-            'status'=>'اكتمل'
+            'status'=>'في السوق'
         ]);
         if($request->has('images')) {
             foreach ($request->images as $image) {
@@ -78,6 +78,7 @@ class ProductController extends Controller
     public function getSellerProducts(Request $request){
         $seller = $request->user();
         $sellerProducts = Product::where('user_id',$seller->id)
+        ->where('state','active')
         ->with(['category','subCategory','productImages'])
         ->get();
         foreach ($sellerProducts as $product){

@@ -15,12 +15,22 @@ class UserHomePageController extends Controller
     public function Homepage(Request $request){
         $user = $request->user();
         $categories = Category::all();
-        $products = Product::with('productImages')->get()->map(function ($product) {
+        $products = Product::where('state','active')
+        ->with('productImages')->get()->map(function ($product) {
             return [
-                'id' => $product->id,
+                'product_id' => $product->id,
+                'category_id' => $product->category_id,
+                'category_name' => $product->category->name,
+                'sub_category_id' => $product->sub_category_id,
+                'sub_category_name' => $product->subCategory->name,
                 'name' => $product->name,
                 'description' => $product->description,
                 'price' => $product->price,
+                'location' => $product->location,
+                'size' => $product->size,
+                'color' => $product->color,
+                'quantity' => $product->quantity,
+                'type' => $product->type,
                 'images' => $product->productImages->map(function ($image) {
                     return [
                         'image' =>asset('storage/' . $image->image),
@@ -88,12 +98,19 @@ class UserHomePageController extends Controller
     }
 
     public function getProductrs(){
-        $products = Product::with(['category','subCategory','productImages'])
+        $products = Product::with(['category:id,name','subCategory:id,name','productImages'])
         ->where('state','active')
         ->get();
+
+        foreach ($products as $product){
+            foreach ($product->productImages as $productImage){
+                $productImage->image = asset('storage/'.$productImage->image);
+            }
+        }
         $data =[
             'products' => $products
         ];
         return response()->json($data);
     }
 }
+

@@ -12,7 +12,8 @@ class Order extends Model
         'user_id',
         'order_code',
         'total_price',
-        'status'
+        'status',
+        'location'
     ];
 
     public function user()
