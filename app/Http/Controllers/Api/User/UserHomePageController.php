@@ -46,7 +46,7 @@ class UserHomePageController extends Controller
             }
         }
         $data =[
-            'user_name'=>$user->first_name.' '.$user->last_name,
+            'user_name'=>$user->first_name??'Guest',
             'categories' => $categories,
             'products' => $products
         ];

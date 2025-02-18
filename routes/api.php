@@ -22,6 +22,9 @@ Route::delete('/logout', [AuthController::class, 'logout']);
 
 Route::get('/seller/getAreas', [SellerHomepageController::class, 'getAreas']);
 
+Route::get('/user/homepage', [UserHomePageController::class, 'HomePage']);
+
+
 Route::get('/seller/getCities', [SellerHomepageController::class, 'getCities']);
 
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
@@ -123,7 +126,6 @@ Route::middleware(['auth:sanctum','IsUser'])->group(function () {
 
     Route::delete('/user/logout', [AuthController::class, 'logout']);
 
-    Route::get('/user/homepage', [UserHomePageController::class, 'HomePage']);
 
     Route::get('/user/getCtegories', [UserHomePageController::class, 'getCtegories']);
 
