@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::delete('/logout', [AuthController::class, 'logout']);
+Route::delete('/deleteAccount', [AuthController::class, 'deleteAccount']);
 
 Route::get('/seller/getAreas', [SellerHomepageController::class, 'getAreas']);
 
@@ -27,9 +28,13 @@ Route::get('/user/homepage', [UserHomePageController::class, 'HomePage']);
 
 Route::get('/seller/getCities', [SellerHomepageController::class, 'getCities']);
 
+
+
 Route::middleware(['auth:sanctum','IsAdmin'])->group(function () {
 
     Route::delete('/admin/logout', [AuthController::class, 'logout']);
+
+    Route::delete('/admin/deleteAccount', [AuthController::class, 'deleteAccount']);
 
 //////////////////////////////////////////// Areas //////////////////////////////////////////////////
 
@@ -106,6 +111,8 @@ Route::middleware(['auth:sanctum','IsSeller'])->group(function () {
 
     Route::delete('/seller/logout', [AuthController::class, 'logout']);
 
+    Route::delete('/seller/deleteAccount', [AuthController::class, 'deleteAccount']);
+
     Route::get('/seller/homepage', [SellerHomepageController::class, 'HomePage']);
 
 /////////////////////////////////////////////// Products /////////////////////////////////////////////////////////////
@@ -125,6 +132,8 @@ Route::middleware(['auth:sanctum','IsSeller'])->group(function () {
 Route::middleware(['auth:sanctum','IsUser'])->group(function () {
 
     Route::delete('/user/logout', [AuthController::class, 'logout']);
+
+    Route::delete('/user/deleteAccount', [AuthController::class, 'deleteAccount']);
 
 
     Route::get('/user/getCtegories', [UserHomePageController::class, 'getCtegories']);
