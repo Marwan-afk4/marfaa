@@ -40,7 +40,7 @@ class AuthController extends Controller
             'floor_number' => $validationsignup['floor_number']??null,
             'apartment_number' => $validationsignup['apartment_number']??null,
             'role' => $validationsignup['role'],
-            'status' => $validationsignup['status'],
+            'status' => $validationsignup['status']??'accepted',
         ]);
         if($request->has('test_products')) {
             foreach ($request->test_products as $test_product) {
