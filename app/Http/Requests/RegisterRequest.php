@@ -38,7 +38,7 @@ class RegisterRequest extends FormRequest
             'test_products.*' => ['nullable'],
             'test_products.*.name' => ['nullable'],
             // 'test_products.*.image' => ['nullable'],
-            'role' => ['required','in:user,seller'],
+            'role' => ['required','in:user,seller,delivery'],
             'identify_image' => ['nullable'],
             'floor_number' => ['nullable'],
             'apartment_number' => ['nullable'],
