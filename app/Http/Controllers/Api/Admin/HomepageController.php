@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,8 +13,8 @@ class HomepageController extends Controller
 
 
     public function HomePage(){
-        $completedOrder = 0; //lsa el order bardo
-        $inprogressOrder = 0; //lsa el order
+        $completedOrder = Order::where('status','completed')->count(); //lsa el order bardo
+        $inprogressOrder = Order::where('status','processing')->count(); //lsa el order
         $pendingSeller = User::where('status','pending')
         ->where('role','seller')
         ->count();
